@@ -6,6 +6,7 @@ O grupo é constituído por 4 pessoas, conforme se segue:
 | Matrícula | Nome |
 | -- | --|
 | 202015901 | Ana Luiza Hoffmann Ferreira |
+| 190086971 | Felipe Direito Corrieri de Macedo |
 
 ## Enunciado
 Esse trabalho consiste na implementação da estrutura de dados Árvore-B e seus algoritmos, principais e auxiliares, com a utilização das técnicas de programação por contratos (Design by Contracts).
