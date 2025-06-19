@@ -8,6 +8,7 @@ O grupo é constituído por 4 pessoas, conforme se segue:
 | 202015901 | Ana Luiza Hoffmann Ferreira |
 | 190086971 | Felipe Direito Corrieri de Macedo |
 | 232014727 | Kauan de Torres Eiras |
+| 190105071 | Davi Gonçalves Akegawa Pierre |
 
 ## Enunciado
 Esse trabalho consiste na implementação da estrutura de dados Árvore-B e seus algoritmos, principais e auxiliares, com a utilização das técnicas de programação por contratos (Design by Contracts).
