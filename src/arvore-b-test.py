@@ -1,5 +1,6 @@
 import unittest
-from arvoreB import ArvoreB, NoB 
+from arvoreB import ArvoreB
+from noB import NoB
 
 class TesteArvoreB(unittest.TestCase):
 
