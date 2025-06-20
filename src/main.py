@@ -9,7 +9,7 @@ if __name__ == "__main__":
         btree.inserir(elem)
 
     print("Árvore-B construída:")
-    btree.imprimir_horizontalmente()
+    btree.imprimir()
 
     print("\n\nBuscando valores:")
     print("Busca por 6:", "Encontrado" if btree.buscar(6) else "Não encontrado")
@@ -20,10 +20,14 @@ if __name__ == "__main__":
         btree.remover(elem)
 
     print("\n\nÁrvore-B com elementos removidos:")
-    btree.imprimir_horizontalmente()
+    btree.imprimir()
 
     for elem in elementos:
         btree.inserir(elem)
 
     print("\n\nÁrvore-B com elementos re-inseridos:")
-    btree.imprimir_horizontalmente()
+    btree.imprimir()
+
+    n = 99
+    print(f"\n\nBuscando elemento {n}:")
+    btree.buscar_caminho(n)

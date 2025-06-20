@@ -30,22 +30,13 @@ class NoB:
                 i -= 1
             i += 1
             if len(self.filhos[i].chaves) == (2 * self.t) - 1:
-                dividir_filho(self, i)  # uso da função externa
+                dividir_filho(self, i)
                 if k > self.chaves[i]:
                     i += 1
             self.filhos[i].inserir_nao_cheio(k)
 
     def dividir_filho(self, i):
-        t = self.t
-        y = self.filhos[i]
-        z = NoB(t, y.folha)
-        self.filhos.insert(i + 1, z)
-        self.chaves.insert(i, y.chaves[t - 1])
-        z.chaves = y.chaves[t:(2 * t - 1)]
-        y.chaves = y.chaves[0:t - 1]
-        if not y.folha:
-            z.filhos = y.filhos[t:(2 * t)]
-            y.filhos = y.filhos[0:t]
+        dividir_filho(self, i)
 
     def remover(self, k):
         t = self.t
