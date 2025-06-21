@@ -48,6 +48,27 @@ def pegar_do_irmao_direito(no, i):
         filho.filhos.append(irmao.filhos.pop(0))
     no.chaves[i] = irmao.chaves.pop(0)
 
+def ajustar_raiz(arvore):
+    raiz = arvore.raiz
+    t = arvore.t
+
+    if raiz.folha:
+        return
+
+    if len(raiz.chaves) == 0:
+        arvore.raiz = raiz.filhos[0]
+        return
+
+    if len(raiz.chaves) < t - 1:
+        if len(raiz.filhos[0].chaves) >= t:
+            pegar_do_irmao_esquerdo(raiz, 1)
+        elif len(raiz.filhos[-1].chaves) >= t:
+            pegar_do_irmao_direito(raiz, len(raiz.chaves) - 1)
+        else:
+            fundir(raiz, 0)
+            if len(raiz.chaves) == 0:
+                arvore.raiz = raiz.filhos[0]
+
 def dividir_filho(pai, i):
     from noB import NoB 
 

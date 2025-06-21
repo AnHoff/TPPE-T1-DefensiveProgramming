@@ -19,6 +19,28 @@ Os trabalhos deverão ser desenvolvidos em Python3, com a utilização da biblio
 
 Os elementos a serem inseridos na árvore são valores inteiros. Os grupos podem usar os valores apresentados no exemplo desse trabalho para que possam avaliar a implementação.
 
+## Como rodar
+
+```bash
+
+# executar exemplo
+python src\main.py
+
+# rodar testes
+cd src
+python arvore-b-test.py -v
+```
+
+
 ## Resolução
 
-⚠️ Em construção... ⚠️
+A implementação encontra-se em `src/` e é composta pelos seguintes módulos principais:
+
+| Arquivo | Responsabilidade |
+| --- | --- |
+| `arvoreB.py` | Classe `ArvoreB`, ponto de entrada das operações (inserir, remover, buscar) |
+| `noB.py` | Classe `NoB`, representa nós internos/folhas |
+| `balanceamento.py` | Funções auxiliares de split, merge e redistribuição |
+| `imprimir.py` | Saídas de depuração da árvore (horizontal e caminho de busca) |
+| `main.py` | Script-exemplo que constrói a árvore, remove e reinsere chaves |
+| `arvore-b-test.py` | Testes unitários básicos |
