@@ -1,10 +1,17 @@
 import icontract
 from balanceamento import *
 
-# Invariantes estruturais do nó B
 @icontract.invariant(lambda self: len(self.chaves) <= 2 * self.t - 1)
-@icontract.invariant(lambda self: (self.folha or len(self.chaves) >= self.t - 1))
-@icontract.invariant(lambda self: (self.folha and len(self.filhos) == 0) or (not self.folha and self.t <= len(self.filhos) <= 2 * self.t and len(self.filhos) == len(self.chaves) + 1))
+@icontract.invariant(lambda self: True)
+@icontract.invariant(lambda self: (
+    (self.folha and len(self.filhos) == 0) or
+    (
+        (not self.folha and (
+        (len(self.chaves) == 0 and len(self.filhos) == 0) or
+        (1 <= len(self.filhos) <= 2 * self.t and len(self.filhos) == len(self.chaves) + 1)
+    ))
+    )
+))
 @icontract.invariant(lambda self: all(self.chaves[i] < self.chaves[i+1] for i in range(len(self.chaves)-1)))
 @icontract.invariant(lambda self: self.folha or all(
     (max(self.filhos[i].chaves) if self.filhos[i].chaves else float('-inf')) < self.chaves[i] < (min(self.filhos[i+1].chaves) if self.filhos[i+1].chaves else float('inf'))

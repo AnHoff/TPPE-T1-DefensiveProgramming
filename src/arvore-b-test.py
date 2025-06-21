@@ -67,6 +67,41 @@ class TesteArvoreB(unittest.TestCase):
         self.assertTrue(all(h == alturas[0] for h in alturas),
                         "Todas as folhas devem estar na mesma altura")
 
+    def test_insercao_duplicada_violacao(self):
+        with self.assertRaises(Exception):
+            self.b.inserir(10)
+
+    def test_overflow_aumenta_altura_da_raiz(self):
+        b = ArvoreB(t=2)
+        altura_antes = self.conta_altura(b.raiz)
+        for k in range(50):
+            b.inserir(k)
+        altura_depois = self.conta_altura(b.raiz)
+        self.assertGreaterEqual(altura_depois, altura_antes + 1)
+
+    def test_underflow_diminui_altura_da_raiz(self):
+        b = ArvoreB(t=2)
+        valores = list(range(50))
+        for k in valores:
+            b.inserir(k)
+        altura_inicial = self.conta_altura(b.raiz)
+        for k in reversed(valores):
+            b.remover(k)
+        altura_final = self.conta_altura(b.raiz)
+        self.assertLess(altura_final, altura_inicial)
+
+    def test_fuzzing_inserir_remover(self):
+        import random
+        b = ArvoreB(t=2)
+        dados = list(range(100))
+        random.shuffle(dados)
+        for k in dados:
+            b.inserir(k)
+        random.shuffle(dados)
+        for k in dados[:50]:
+            b.remover(k)
+        self.assertTrue(all(child.folha == b.raiz.filhos[0].folha for child in b.raiz.filhos))
+
 if __name__ == '__main__':
     unittest.main()
 
