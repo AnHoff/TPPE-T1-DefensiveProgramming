@@ -32,7 +32,7 @@ def _validar_no(no, t, is_root=False):
 
     return all(_validar_no(child, t) for child in no.filhos)
 
-
+@icontract.invariant(lambda self: self._todas_folhas_no_mesmo_nivel(), description="Todas as folhas devem estar no mesmo nível")
 @icontract.invariant(lambda self:
     (self.raiz.folha and len(self.raiz.chaves) == 0 and len(self.raiz.filhos) == 0) or
     (
@@ -47,6 +47,30 @@ class ArvoreB:
         self.raiz = NoB(t, True)
         self.t = t
 
+    def _todas_folhas_no_mesmo_nivel(self):
+        niveis = []
+        def _coletar_niveis_folhas(no, nivel):
+            if no.folha:
+                niveis.append(nivel)
+            else:
+                for filho in no.filhos:
+                    _coletar_niveis_folhas(filho, nivel + 1)
+
+        _coletar_niveis_folhas(self.raiz, 0)
+        return len(niveis) == 0 or all(n == niveis[0] for n in niveis)
+
+    def _get_altura(self, no=None):
+        if no is None:
+            no = self.raiz
+        h = 0
+        atual = no
+        while not atual.folha:
+            h += 1
+            if not atual.filhos:
+                return h
+            atual = atual.filhos[0]
+        return h
+
     def buscar(self, k):
         return self.raiz.buscar(k)
     
@@ -54,8 +78,15 @@ class ArvoreB:
         buscar_caminho(self, k)
 
     @icontract.require(lambda self, k: self.buscar(k) is None, description="Chave já existente na árvore")
-    @icontract.ensure(lambda self, k: _validar_no(self.raiz, self.t, True))
+    @icontract.ensure(
+        lambda self, result:
+            self._get_altura() == result or self._get_altura() == result + 1,
+        description="Altura após inserção deve ser a mesma ou aumentar em 1"
+    )
+    @icontract.ensure(lambda self: _validar_no(self.raiz, self.t, True))
     def inserir(self, k):
+        altura_antes = self._get_altura()
+        
         raiz = self.raiz
         if len(raiz.chaves) == (2 * self.t) - 1:
             nova_raiz = NoB(self.t, False)
@@ -65,12 +96,19 @@ class ArvoreB:
             nova_raiz.inserir_nao_cheio(k)
         else:
             raiz.inserir_nao_cheio(k)
+        return altura_antes
 
     @icontract.require(lambda self, k: self.buscar(k) is not None, description="Chave deve existir na árvore")
-    @icontract.ensure(lambda self, k: _validar_no(self.raiz, self.t, True))
+    @icontract.ensure(
+        lambda self, result:
+            self._get_altura() == result or self._get_altura() == result - 1,
+        description="Altura após remoção deve ser a mesma ou diminuir em 1"
+    )
+    @icontract.ensure(lambda self: _validar_no(self.raiz, self.t, True))
     def remover(self, k):
+        altura_antes = self._get_altura()
         if not self.raiz:
-            return
+            return altura_antes   
         self.raiz.remover(k)
         ajustar_raiz(self)
 
@@ -79,6 +117,7 @@ class ArvoreB:
                 self.raiz = NoB(self.t, True)
             else:
                 self.raiz = self.raiz.filhos[0]
-    
+        return altura_antes
+
     def imprimir(self):
         imprimir_horizontalmente(self)
