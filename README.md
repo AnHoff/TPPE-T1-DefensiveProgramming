@@ -22,13 +22,15 @@ Os elementos a serem inseridos na árvore são valores inteiros. Os grupos podem
 ## Como rodar
 
 ```bash
+# Instalar o icontract
+pip install icontract
 
 # executar exemplo
-python src\main.py
+python3 src\main.py
 
 # rodar testes
 cd src
-python arvore-b-test.py -v
+python3 arvore-b-test.py -v
 ```
 
 
